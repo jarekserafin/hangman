@@ -1,10 +1,15 @@
 import random
+import linecache
+import time
 
 
 def hide(word):
     word2 = list()
     for i in range(len(word)):
-        word2.append("-")
+        if word[i] == " ":
+            word2.append(" ")
+        else:
+            word2.append("-")
     return word2
 
 
@@ -13,7 +18,7 @@ menu_0 = 'Type "play" to play the game, "results" to show the scoreboard, and "e
 msg_0 = "Input a letter:"
 msg_1 = "That letter doesn't appear in the word."
 msg_2 = "Thanks for playing!"
-msg_3 = "No improvements."
+msg_3 = "Attempts left: "
 msg_4 = "You guessed the word "
 msg_5 = "You survived!"
 msg_6 = "You lost!"
@@ -21,32 +26,41 @@ err_0 = "Please, input a single letter."
 err_1 = "Please, enter a lowercase letter from the English alphabet."
 err_2 = "You've already guessed this letter."
 
-example_list = ['python', 'java', 'swift', 'javascript']
-
 won_games = 0
 lost_games = 0
-
-print("H A N G M A N")
+attempts = 8
+print("Welcome to ...")
+time.sleep(0.9)
+print("H A N G M A N - animal edition")
+time.sleep(0.7)
 while True:
     print(menu_0)
     choose = input()
     if choose == "play":
-        attempts = 8
-        word = example_list[random.randint(0, 3)]
+        true_attempts = attempts
+        line = random.randint(1, 1648)
+        word = linecache.getline('animals.txt', 1648, module_globals=None)
+        word = word.replace('\n', '')
+        word = word.lower()
         hidden = hide(word)
         word2 = list(word)
         guessed = list()
         while True:
+            time.sleep(0.5)
             print("".join(hidden))
+            time.sleep(0.5)
             print(msg_0)
             guess = input()
             if len(guess) != 1:
+                time.sleep(0.5)
                 print(err_0)
                 continue
             if guess not in latin:
+                time.sleep(0.5)
                 print(err_1)
                 continue
             if guess in guessed:
+                time.sleep(0.5)
                 print(err_2)
                 continue
             elif guess in word2:
@@ -58,7 +72,9 @@ while True:
                     x -= 1
             else:
                 print(msg_1)
+                time.sleep(0.5)
                 attempts -= 1
+                print(msg_3 + str(attempts))
             if attempts == 0:
                 win = False
                 break
