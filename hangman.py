@@ -1,6 +1,7 @@
 import random
 import linecache
 import time
+import os
 
 
 def hide(word):
@@ -21,7 +22,7 @@ msg_2 = "Thanks for playing!"
 msg_3 = "Attempts left: "
 msg_4 = "You guessed the word "
 msg_5 = "You survived!"
-msg_6 = "You lost!"
+msg_6 = "You lost, correct answer was: "
 err_0 = "Please, input a single letter."
 err_1 = "Please, enter a lowercase letter from the English alphabet."
 err_2 = "You've already guessed this letter."
@@ -40,28 +41,23 @@ while True:
         attempts = 8
         true_attempts = attempts
         line = random.randint(1, 1648)
-        word = linecache.getline('animals.txt', 1648, module_globals=None)
+        word = linecache.getline('animals.txt', line, module_globals=None)
         word = word.replace('\n', '')
         word = word.lower()
         hidden = hide(word)
         word2 = list(word)
         guessed = list()
         while True:
-            time.sleep(0.5)
             print("".join(hidden))
-            time.sleep(0.5)
             print(msg_0)
             guess = input()
             if len(guess) != 1:
-                time.sleep(0.5)
                 print(err_0)
                 continue
             if guess not in latin:
-                time.sleep(0.5)
                 print(err_1)
                 continue
             if guess in guessed:
-                time.sleep(0.5)
                 print(err_2)
                 continue
             elif guess in word2:
@@ -73,7 +69,6 @@ while True:
                     x -= 1
             else:
                 print(msg_1)
-                time.sleep(0.5)
                 attempts -= 1
                 print(msg_3 + str(attempts))
             if attempts == 0:
@@ -84,14 +79,17 @@ while True:
                 break
             guessed.append(guess)
         if win:
+            os.system('cls')
             print(msg_4 + "".join(hidden) + "!")
             print(msg_5)
             won_games += 1
         else:
-            print(msg_6)
+            os.system('cls')
+            print(msg_6 + word + ' :)')
             lost_games += 1
         continue
     elif choose == "results":
+        os.system('cls')
         print("You won: " + str(won_games) + " times")
         print("You lost: " + str(lost_games) + " times")
         continue
