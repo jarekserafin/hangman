@@ -37,6 +37,7 @@ while True:
     print(menu_0)
     choose = input()
     if choose == "play":
+        attempts = 8
         true_attempts = attempts
         line = random.randint(1, 1648)
         word = linecache.getline('animals.txt', 1648, module_globals=None)
